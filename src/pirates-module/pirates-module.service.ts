@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { CreatePirateDto } from './dto/create-pirates-module.dto';
 import { UpdatePirateDto } from './dto/update-pirates-module.dto';
@@ -14,7 +19,14 @@ export class PiratesService {
   ) {}
 
   async create(createPirateDto: CreatePirateDto): Promise<Pirate> {
-    return this.pirateModel.create(createPirateDto);
+    try {
+      return await this.pirateModel.create(createPirateDto);
+    } catch (error) {
+      if (error?.code === 11000) {
+        throw new ConflictException('Ya existe un pirata con ese nombre.');
+      }
+      throw error;
+    }
   }
 
   async findAll(): Promise<Pirate[]> {
@@ -22,6 +34,10 @@ export class PiratesService {
   }
 
   async findOne(id: string): Promise<Pirate> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id del pirata no es válido.');
+    }
+
     const pirate = await this.pirateModel.findById(id).exec();
 
     if (!pirate) {
@@ -32,6 +48,10 @@ export class PiratesService {
   }
 
   async update(id: string, updatePirateDto: UpdatePirateDto): Promise<Pirate> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id del pirata no es válido.');
+    }
+
     const pirate = await this.pirateModel
       .findByIdAndUpdate(id, updatePirateDto, {
         new: true,
@@ -47,6 +67,10 @@ export class PiratesService {
   }
 
   async remove(id: string): Promise<Pirate> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id del pirata no es válido.');
+    }
+
     const pirate = await this.pirateModel.findByIdAndDelete(id).exec();
 
     if (!pirate) {

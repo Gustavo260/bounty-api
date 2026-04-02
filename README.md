@@ -23,6 +23,10 @@ Este proyecto permite:
 - class-validator
 - class-transformer
 
+## 📬 Colección Postman
+
+Se incluye en el repositorio la colección exportada de Postman en formato `.json` para probar todos los endpoints de la API.
+
 ## ⚙️ Instalación
 
 ## 📦 Dependencias utilizadas
@@ -96,3 +100,4 @@ Actualizar una recompensa.
 DELETE /bounties/:id
 Eliminar una recompensa.
 
+![alt text](image.png)

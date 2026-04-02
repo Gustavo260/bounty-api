@@ -1,6 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { CreateBountyDto } from './dto/create-bounties-module.dto';
 import { UpdateBountyDto } from './dto/update-bounties-module.dto';
@@ -29,6 +33,10 @@ export class BountiesService {
   }
 
   async findOne(id: string): Promise<Bounty> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id de la recompensa no es válido.');
+    }
+
     const bounty = await this.bountyModel.findById(id).populate('pirata').exec();
 
     if (!bounty) {
@@ -39,6 +47,10 @@ export class BountiesService {
   }
 
   async update(id: string, updateBountyDto: UpdateBountyDto): Promise<Bounty> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id de la recompensa no es válido.');
+    }
+
     const bounty = await this.bountyModel
       .findByIdAndUpdate(id, updateBountyDto, {
         new: true,
@@ -55,6 +67,10 @@ export class BountiesService {
   }
 
   async remove(id: string): Promise<Bounty> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('El id de la recompensa no es válido.');
+    }
+
     const bounty = await this.bountyModel.findByIdAndDelete(id).exec();
 
     if (!bounty) {

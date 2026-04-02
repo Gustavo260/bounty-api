@@ -60,6 +60,8 @@ describe('BountiesService', () => {
   });
 
   it('findOne should throw NotFoundException if bounty does not exist', async () => {
+    const validButNonExistingId = '507f1f77bcf86cd799439011';
+
     const execMock = jest.fn().mockResolvedValue(null);
     const populateMock = jest.fn().mockReturnValue({ exec: execMock });
 
@@ -67,8 +69,8 @@ describe('BountiesService', () => {
       populate: populateMock,
     });
 
-    await expect(service.findOne('123')).rejects.toThrow(NotFoundException);
-    expect(bountyModelMock.findById).toHaveBeenCalledWith('123');
+    await expect(service.findOne(validButNonExistingId)).rejects.toThrow(NotFoundException);
+    expect(bountyModelMock.findById).toHaveBeenCalledWith(validButNonExistingId);
     expect(populateMock).toHaveBeenCalledWith('pirata');
   });
 });
