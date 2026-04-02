@@ -100,4 +100,4 @@ Actualizar una recompensa.
 DELETE /bounties/:id
 Eliminar una recompensa.
 
-![alt text](image.png)
+![Captura de tests](resultado-test.png)
