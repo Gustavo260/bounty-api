@@ -1,0 +1,39 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { BountiesService } from './bounties-module.service';
+import { CreateBountyDto } from './dto/create-bounties-module.dto';
+import { UpdateBountyDto } from './dto/update-bounties-module.dto';
+
+@Controller('bounties')
+export class BountiesController {
+  constructor(private readonly bountiesService: BountiesService) {}
+
+  @Post()
+  create(@Body() createBountyDto: CreateBountyDto) {
+    return this.bountiesService.create(createBountyDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.bountiesService.findAll();
+  }
+
+  @Get('active')
+  findActive() {
+    return this.bountiesService.findActive();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.bountiesService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateBountyDto: UpdateBountyDto) {
+    return this.bountiesService.update(id, updateBountyDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.bountiesService.remove(id);
+  }
+}
