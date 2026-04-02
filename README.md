@@ -55,7 +55,7 @@ git clone https://github.com/Gustavo260/bounty-api.git
 cd bounty-api
 
 Crear un .env en la raíz
-MONGODB_URL=mongodb+srv://TU_USUARIO:TU_PASSWORD@TU_CLUSTER.mongodb.net/bounty?retryWrites=true&w=majority
+MONGODB_URL=URL_CONEXION
 
 npm run start:dev / npm run test
 
