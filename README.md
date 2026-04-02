@@ -40,6 +40,7 @@ Se incluye en el repositorio la colección exportada de Postman en formato `.jso
 | `class-transformer` | Transformación de datos entrantes |
 | `@nestjs/mapped-types` | Soporte para `PartialType` en DTOs de actualización |
 
+![Captura de tests](images/inicio.jpg)
 ![Captura de tests](images/resultado-test.png)
 
 ### Instalación de dependencias principales
